@@ -1,0 +1,17 @@
+{
+  "name": "ts3-ezdesc-app",
+  "version": "1.0.0",
+  "description": "Electron App for TS3 EZDesc",
+  "main": "main.js",
+  "author": "LinuxFox",
+  "license": "GPL-3.0-only",
+  "type": "commonjs",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-packager . ts3-ezdesc --platform=win32 --arch=x64 --out=dist --overwrite"
+  },
+  "devDependencies": {
+    "electron": "^40.0.0",
+    "electron-packager": "^17.1.2"
+  }
+}
