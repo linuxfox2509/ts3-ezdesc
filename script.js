@@ -449,6 +449,185 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('unicodeModal').classList.add('hidden');
     });
 
+    // ========================
+    // TeamSpeak 3 Panel Functionality
+    // ========================
+    const ts3Inputs = {
+        host: document.getElementById('ts3Host'),
+        port: document.getElementById('ts3Port'),
+        nickname: document.getElementById('ts3Nickname'),
+        password: document.getElementById('ts3Password'),
+        channel: document.getElementById('ts3Channel'),
+        channelId: document.getElementById('ts3ChannelId'),
+        channelPassword: document.getElementById('ts3ChannelPassword'),
+        token: document.getElementById('ts3Token'),
+        bookmark: document.getElementById('ts3Bookmark')
+    };
+
+    const ts3Elements = {
+        urlText: document.getElementById('ts3URL'),
+        bbcodeText: document.getElementById('ts3BBCode'),
+        joinBtn: document.getElementById('ts3JoinBtn'),
+        joinCopyBtn: document.getElementById('ts3JoinCopyBtn'),
+        copyUrlBtn: document.getElementById('ts3CopyUrlBtn'),
+        copyBbCodeBtn: document.getElementById('ts3CopyBbCodeBtn')
+    };
+
+    // Function to generate TS3 URL
+    function generateTS3URL() {
+        const host = ts3Inputs.host.value.trim();
+        const port = ts3Inputs.port.value.trim();
+        const nickname = ts3Inputs.nickname.value.trim();
+        const password = ts3Inputs.password.value.trim();
+        const channel = ts3Inputs.channel.value.trim();
+        const channelId = ts3Inputs.channelId.value.trim();
+        const channelPassword = ts3Inputs.channelPassword.value.trim();
+        const token = ts3Inputs.token.value.trim();
+        const bookmark = ts3Inputs.bookmark.value.trim();
+
+        if (!host) {
+            return '';
+        }
+
+        // Build the base URL
+        let url = `ts3server://${host}`;
+
+        // Add parameters
+        const params = [];
+
+        if (port && port !== '9987') {
+            params.push(`port=${port}`);
+        }
+
+        if (nickname) {
+            params.push(`nickname=${encodeURIComponent(nickname)}`);
+        }
+
+        if (password) {
+            params.push(`password=${encodeURIComponent(password)}`);
+        }
+
+        if (channelId) {
+            params.push(`cid=${channelId}`);
+        } else if (channel) {
+            params.push(`channel=${encodeURIComponent(channel)}`);
+        }
+
+        if (channelPassword) {
+            params.push(`channelpassword=${encodeURIComponent(channelPassword)}`);
+        }
+
+        if (token) {
+            params.push(`token=${encodeURIComponent(token)}`);
+        }
+
+        if (bookmark) {
+            params.push(`addbookmark=${encodeURIComponent(bookmark)}`);
+        }
+
+        if (params.length > 0) {
+            url += `?${params.join('&')}`;
+        }
+
+        return url;
+    }
+
+    // Function to generate BBCode
+    function generateBBCode() {
+        const url = generateTS3URL();
+        if (!url) return '';
+        
+        const host = ts3Inputs.host.value.trim();
+        const port = ts3Inputs.port.value.trim() || '9987';
+        const bookmarkLabel = ts3Inputs.bookmark.value.trim() || `${host}:${port}`;
+
+        return `[url=${url}]Click to join ${bookmarkLabel}[/url]`;
+    }
+
+    // Function to update the URL display
+    function updateTS3Display() {
+        const url = generateTS3URL();
+        ts3Elements.urlText.value = url;
+        ts3Elements.bbcodeText.value = generateBBCode();
+    }
+
+    // Function to copy text to clipboard
+    function copyToClipboard(text) {
+        if (!text) {
+            alert('Nothing to copy. Please fill in the server address.');
+            return false;
+        }
+
+        navigator.clipboard.writeText(text).then(() => {
+            // Create a temporary notification
+            const btn = event.target;
+            const originalText = btn.textContent;
+            btn.textContent = '✓ Copied!';
+            setTimeout(() => {
+                btn.textContent = originalText;
+            }, 2000);
+        }).catch(err => {
+            console.error('Failed to copy:', err);
+            alert('Failed to copy to clipboard');
+        });
+
+        return true;
+    }
+
+    // Add event listeners to all TS3 inputs for real-time update
+    Object.values(ts3Inputs).forEach(input => {
+        input.addEventListener('input', updateTS3Display);
+        input.addEventListener('change', updateTS3Display);
+    });
+
+    // Copy URL button
+    ts3Elements.copyUrlBtn.addEventListener('click', () => {
+        copyToClipboard(ts3Elements.urlText.value);
+    });
+
+    // Copy BBCode button
+    ts3Elements.copyBbCodeBtn.addEventListener('click', () => {
+        copyToClipboard(ts3Elements.bbcodeText.value);
+    });
+
+    // Join button - opens the TS3 URL
+    ts3Elements.joinBtn.addEventListener('click', () => {
+        const url = generateTS3URL();
+        if (!url) {
+            alert('Please enter a server address.');
+            return;
+        }
+        window.location.href = url;
+    });
+
+    // Join & Copy button - opens TS3 URL and copies BBCode
+    ts3Elements.joinCopyBtn.addEventListener('click', () => {
+        const url = generateTS3URL();
+        if (!url) {
+            alert('Please enter a server address.');
+            return;
+        }
+
+        // Copy BBCode
+        const bbcode = generateBBCode();
+        navigator.clipboard.writeText(bbcode).then(() => {
+            // Show feedback and then open the TS3 URL
+            const btn = ts3Elements.joinCopyBtn;
+            const originalText = btn.textContent;
+            btn.textContent = '✓ Copied & Joining...';
+            setTimeout(() => {
+                window.location.href = url;
+            }, 500);
+        }).catch(err => {
+            console.error('Failed to copy:', err);
+            // Still open TS3 even if copy failed
+            window.location.href = url;
+        });
+    });
+
+    // Initialize display on page load
+    updateTS3Display();
+
     console.log('All event listeners attached');
 });
 

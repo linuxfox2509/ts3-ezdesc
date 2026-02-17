@@ -106,6 +106,126 @@
                     </div>
                 </div>
             </div>
+
+            <!-- TeamSpeak 3 Server Connection Panel -->
+            <div class="ts3-panel">
+                <div class="ts3-panel-header">
+                    <h2>Server Link Maker</h2>
+                </div>
+                <div class="ts3-panel-content">
+                    <div class="ts3-form">
+                        <div class="ts3-form-row">
+                            <div class="form-group form-group-full">
+                                <label for="ts3Host">
+                                    Server Address <span class="required">*</span>
+                                </label>
+                                <input type="text" id="ts3Host" placeholder="ts3.hoster.com" class="ts3-input">
+                                <small>Example: ts3.hoster.com</small>
+                            </div>
+                        </div>
+
+                        <div class="ts3-form-row">
+                            <div class="form-group">
+                                <label for="ts3Port">
+                                    Port <span class="required">*</span>
+                                </label>
+                                <input type="number" id="ts3Port" placeholder="9987" value="9987" class="ts3-input" min="1" max="65535">
+                                <small>Default: 9987</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="ts3Nickname">
+                                    Nickname
+                                </label>
+                                <input type="text" id="ts3Nickname" placeholder="Optional" class="ts3-input">
+                                <small>Optional - Let users set their own</small>
+                            </div>
+                        </div>
+
+                        <div class="ts3-form-row">
+                            <div class="form-group">
+                                <label for="ts3Password">
+                                    Server Password
+                                </label>
+                                <input type="password" id="ts3Password" placeholder="Optional" class="ts3-input">
+                                <small>Optional</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="ts3Channel">
+                                    Default Channel
+                                </label>
+                                <input type="text" id="ts3Channel" placeholder="Optional" class="ts3-input">
+                                <small>Optional (ignored if Channel ID is set)</small>
+                            </div>
+                        </div>
+
+                        <div class="ts3-form-row">
+                            <div class="form-group">
+                                <label for="ts3ChannelId">
+                                    Channel ID
+                                </label>
+                                <input type="number" id="ts3ChannelId" placeholder="Optional" class="ts3-input" min="1">
+                                <small>Optional (overrides Default Channel)</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="ts3ChannelPassword">
+                                    Channel Password
+                                </label>
+                                <input type="password" id="ts3ChannelPassword" placeholder="Optional" class="ts3-input">
+                                <small>Optional</small>
+                            </div>
+                        </div>
+
+                        <div class="ts3-form-row">
+                            <div class="form-group form-group-full">
+                                <label for="ts3Token">
+                                    Token Key
+                                </label>
+                                <input type="text" id="ts3Token" placeholder="Optional" class="ts3-input">
+                                <small>Optional - Server token for permissions</small>
+                            </div>
+                        </div>
+
+                        <div class="ts3-form-row">
+                            <div class="form-group form-group-full">
+                                <label for="ts3Bookmark">
+                                    Bookmark Label
+                                </label>
+                                <input type="text" id="ts3Bookmark" placeholder="Optional" class="ts3-input">
+                                <small>Optional - Label for saving the server to bookmarks</small>
+                            </div>
+                        </div>
+
+                        <div class="ts3-url-container">
+                            <label for="ts3URL">Generated URL:</label>
+                            <div class="ts3-url-display">
+                                <textarea id="ts3URL" class="ts3-url-text" readonly placeholder="ts3server://..."></textarea>
+                                <button id="ts3CopyUrlBtn" class="btn btn-action ts3-copy-btn" title="Copy URL">
+                                    📋 Copy URL
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="ts3-bbcode-container">
+                            <label for="ts3BBCode">BBCode Link:</label>
+                            <div class="ts3-bbcode-display">
+                                <textarea id="ts3BBCode" class="ts3-bbcode-text" readonly placeholder="[url=ts3server://...]Click to join[/url]"></textarea>
+                                <button id="ts3CopyBbCodeBtn" class="btn btn-action ts3-copy-btn" title="Copy BBCode">
+                                    📋 Copy BBCode
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="ts3-actions">
+                            <button id="ts3JoinBtn" class="btn btn-action ts3-action-btn">
+                                🎮 Join Server
+                            </button>
+                            <button id="ts3JoinCopyBtn" class="btn btn-action ts3-action-btn">
+                                🎮 Join & Copy BBCode
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </main>
 
         <footer>

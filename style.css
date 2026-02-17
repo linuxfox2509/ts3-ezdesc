@@ -423,10 +423,173 @@ footer p {
     transform: scale(1.1);
 }
 
+/* TeamSpeak 3 Panel */
+.ts3-panel {
+    background: #f8f9fa;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #e9ecef;
+    margin-top: 50px;
+    margin-bottom: 30px;
+    padding-top: 0;
+}
+
+.ts3-panel-header {
+    background: white;
+    padding: 15px;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.ts3-panel-header h2 {
+    margin: 0;
+    font-size: 1.2em;
+    color: #333;
+}
+
+.ts3-panel-content {
+    padding: 20px;
+}
+
+.ts3-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.ts3-form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.ts3-form-row .form-group-full {
+    grid-column: 1 / -1;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.form-group label {
+    font-weight: 500;
+    font-size: 0.95em;
+    color: #333;
+}
+
+.form-group .required {
+    color: #ff6b6b;
+    font-weight: bold;
+}
+
+.form-group small {
+    font-size: 0.8em;
+    color: #999;
+}
+
+.ts3-input {
+    padding: 10px 12px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    font-size: 0.95em;
+    transition: border-color 0.3s ease;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.ts3-input:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.ts3-input[type="password"] {
+    letter-spacing: 2px;
+}
+
+.ts3-url-container,
+.ts3-bbcode-container {
+    margin-top: 20px;
+}
+
+.ts3-url-container label,
+.ts3-bbcode-container label {
+    display: block;
+    font-weight: 500;
+    font-size: 0.95em;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+.ts3-url-display,
+.ts3-bbcode-display {
+    display: flex;
+    gap: 10px;
+    align-items: stretch;
+}
+
+.ts3-url-text,
+.ts3-bbcode-text {
+    flex: 1;
+    padding: 10px 12px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9em;
+    resize: vertical;
+    min-height: 60px;
+    background: white;
+    color: #333;
+    transition: border-color 0.3s ease;
+}
+
+.ts3-url-text:focus,
+.ts3-bbcode-text:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.ts3-copy-btn {
+    padding: 10px 16px;
+    white-space: nowrap;
+    height: fit-content;
+    align-self: flex-start;
+    margin-top: 0;
+}
+
+.ts3-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    justify-content: flex-end;
+}
+
+.ts3-action-btn {
+    flex: 1;
+    padding: 12px 20px;
+    font-size: 1em;
+    font-weight: 600;
+    margin: 0;
+}
+
+.ts3-action-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+}
+
 /* Responsive */
 @media (max-width: 1024px) {
     .editor-container {
         grid-template-columns: 1fr;
+    }
+
+    .ts3-form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .ts3-form-row .form-group-full {
+        grid-column: 1;
     }
 }
 
@@ -447,6 +610,27 @@ footer p {
 
     .input-group label {
         white-space: normal;
+    }
+
+    .ts3-form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .ts3-url-display,
+    .ts3-bbcode-display {
+        flex-direction: column;
+    }
+
+    .ts3-copy-btn {
+        align-self: stretch;
+    }
+
+    .ts3-actions {
+        flex-direction: column;
+    }
+
+    .ts3-action-btn {
+        width: 100%;
     }
 }
 
