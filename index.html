@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TS3 EZDesc - Teamspeak Channel Description Creator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>TS3 EZDesc</h1>
+            <p>Simple Teamspeak 3 Channel Description Creator with BBCode Support</p>
+        </header>
+
+        <main>
+            <div class="toolbar">
+                <div class="toolbar-row">
+                    <div class="toolbar-section">
+                        <h3>Text Formatting</h3>
+                        <button id="boldBtn" class="btn btn-format" title="Bold [B][/B]">
+                            <strong>B</strong>
+                        </button>
+                        <button id="italicBtn" class="btn btn-format" title="Italic [I][/I]">
+                            <em>I</em>
+                        </button>
+                        <button id="underlineBtn" class="btn btn-format" title="Underline [U][/U]">
+                            <u>U</u>
+                        </button>
+                    </div>
+
+                    <div class="toolbar-section">
+                        <h3>Alignment</h3>
+                        <button id="leftBtn" class="btn btn-format" title="Left align [left][/left]">
+                            ⬅
+                        </button>
+                        <button id="centerBtn" class="btn btn-format" title="Center [center][/center]">
+                            ⬍
+                        </button>
+                        <button id="rightBtn" class="btn btn-format" title="Right align [right][/right]">
+                            ➡
+                        </button>
+                    </div>
+
+                    <div class="toolbar-section">
+                        <h3>Links & Media</h3>
+                        <button id="urlBtn" class="btn btn-format" title="Insert URL">
+                            🔗 URL
+                        </button>
+                        <button id="imgBtn" class="btn btn-format" title="Insert Image">
+                            🖼 Image
+                        </button>
+                        <button id="listBtn" class="btn btn-format" title="Insert List">
+                            📋 List
+                        </button>
+                    </div>
+                </div>
+
+                <div class="toolbar-row">
+                    <div class="toolbar-section">
+                        <h3>Color</h3>
+                        <input type="color" id="colorPicker" value="#000000" class="color-input">
+                        <button id="colorBtn" class="btn btn-format">Apply</button>
+                    </div>
+
+                    <div class="toolbar-section">
+                        <h3>Font Size (1-20)</h3>
+                        <input type="number" id="fontSizeInput" min="1" max="20" placeholder="Size" class="size-input">
+                        <button id="sizeBtn" class="btn btn-format">Apply</button>
+                    </div>
+
+                    <div class="toolbar-section">
+                        <h3>Special Characters</h3>
+                        <button id="unicodeBtn" class="btn btn-format">
+                            🔤 Unicode
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="editor-container">
+                <div class="editor-pane">
+                    <div style="display: flex; justify-content: space-between; align-items: center; background: white; padding: 15px; border-bottom: 1px solid #e9ecef; margin: 0;">
+                        <h3 style="margin: 0; font-size: 1em; color: #333;">Raw BBCode</h3>
+                        <button id="copyBtn" class="btn btn-action" style="margin: 0;">
+                            📋 Copy
+                        </button>
+                    </div>
+                    <textarea id="editor" placeholder="Type or paste your text here. Use the buttons above to add formatting, or write BBCode directly..."></textarea>
+                </div>
+
+                <div class="preview-pane">
+                    <div style="display: flex; justify-content: space-between; align-items: center; background: white; padding: 15px; border-bottom: 1px solid #e9ecef; margin: 0;">
+                        <h3 style="margin: 0; font-size: 1em; color: #333;">Preview</h3>
+                        <div style="display: flex; gap: 10px;">
+                            <button id="updatePreviewBtn" class="btn btn-format" style="margin: 0;" title="Update Preview">
+                                ↻ Refresh
+                            </button>
+                            <button id="clearBtn" class="btn btn-action btn-danger" style="margin: 0;">
+                                🗑 Clear
+                            </button>
+                        </div>
+                    </div>
+                    <div id="preview" class="preview-content">
+                        <p style="color: #999; text-align: center;">Preview will appear here...</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>TS3 EZDesc - Created for Teamspeak 3 Channel Descriptions</p>
+            <p style="font-size: 0.9em; color: #666;">This tool converts BBCode to HTML for preview. Copy the raw text to your TS3 channel description.</p>
+            <p style="font-size: 0.85em; color: #999; margin-top: 12px; padding-top: 12px; border-top: 1px solid #e9ecef;"><strong>Disclaimer:</strong> This tool is not perfect and might have some formatting issues. Feel free to fix any bugs and create a pull request, or report them by opening a new issue.</p>
+            <p style="font-size: 0.85em; color: #999; margin-top: 8px;">Created by <a href="https://links.linuxfox.eu" target="_blank" style="color: #667eea; text-decoration: none;">LinuxFox</a> - 2026</p>
+        </footer>
+    </div>
+
+    <!-- Unicode Picker Modal -->
+    <div id="unicodeModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Unicode Character Selector</h2>
+                <button id="closeUnicodeModal" class="close-btn">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="unicode-search">
+                    <input type="text" id="unicodeSearch" placeholder="Search by name or paste character...">
+                </div>
+                <div id="unicodeGrid" class="unicode-grid">
+                    <!-- Will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- URL Modal -->
+    <div id="urlModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Insert URL</h2>
+                <button id="closeUrlModal" class="close-btn">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="input-group">
+                    <label for="urlInput">URL:</label>
+                    <input type="text" id="urlInput" placeholder="https://example.com">
+                </div>
+                <div class="input-group">
+                    <label for="urlText">Display Text (optional):</label>
+                    <input type="text" id="urlText" placeholder="Click here">
+                </div>
+                <button id="insertUrlBtn" class="btn btn-primary">Insert URL</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Image Modal -->
+    <div id="imgModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Insert Image</h2>
+                <button id="closeImgModal" class="close-btn">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="input-group">
+                    <label for="imgInput">Image URL:</label>
+                    <input type="text" id="imgInput" placeholder="https://example.com/image.png">
+                </div>
+                <button id="insertImgBtn" class="btn btn-primary">Insert Image</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
